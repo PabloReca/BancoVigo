@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="org.example.model.CuentaModel" table="Cuenta" schema="BancoVigo">
+        <id name="cuCodCuenta" column="cuCodCuenta"/>
+        <property name="cuCodSucursal" column="cuCodSucursal"/>
+        <property name="cuFechaCreacion" column="cuFechaCreacion"/>
+        <property name="cuSaldo" column="CuSaldo"/>
+    </class>
+</hibernate-mapping>

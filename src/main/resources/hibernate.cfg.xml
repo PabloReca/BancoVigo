@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Propiedades de conexión a la base de datos -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:4411/BancoVigo</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">1234</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <mapping resource="ClienteModel.hbm.xml"/>
+        <mapping class="org.example.model.ClienteModel"/>
+        <mapping resource="CuentaModel.hbm.xml"/>
+        <mapping class="org.example.model.CuentaModel"/>
+        <mapping resource="CuentasClienteModel.hbm.xml"/>
+        <mapping class="org.example.model.CuentasClienteModel"/>
+        <mapping resource="SucursalesModel.hbm.xml"/>
+        <mapping class="org.example.model.SucursalesModel"/>
+        <mapping resource="TransaccionesModel.hbm.xml"/>
+        <mapping class="org.example.model.TransaccionesModel"/>
+
+    </session-factory>
+</hibernate-configuration>

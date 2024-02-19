@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="org.example.model.TransaccionesModel" table="Transacciones" schema="BancoVigo">
+        <id name="id" column="ID"/>
+        <property name="trCodCuenta" column="trCodCuenta"/>
+        <property name="trFechaTransaccion" column="trFechaTransaccion"/>
+        <property name="trTipo" column="trTipo"/>
+        <property name="trCantidad" column="trCantidad"/>
+    </class>
+</hibernate-mapping>
