@@ -2,23 +2,6 @@
 <entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
                  version="3.0">
 
-    <entity class="app.model.CuentaModel">
-        <table name="Cuenta" schema="BancoVigo" catalog=""/>
-        <attributes>
-            <id name="cuCodCuenta">
-                <column name="cuCodCuenta"/>
-            </id>
-            <basic name="cuCodSucursal">
-                <column name="cuCodSucursal"/>
-            </basic>
-            <basic name="cuFechaCreacion">
-                <column name="cuFechaCreacion"/>
-            </basic>
-            <basic name="cuSaldo">
-                <column name="CuSaldo"/>
-            </basic>
-        </attributes>
-    </entity>
     <entity class="app.model.CuentasClienteModel">
         <table name="CuentasCliente" schema="BancoVigo" catalog=""/>
         <id-class class="app.model.CuentasClienteModelPK"/>

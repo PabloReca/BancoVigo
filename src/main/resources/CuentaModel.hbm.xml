@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="org.example.model.CuentaModel" table="Cuenta" schema="BancoVigo">
+    <class name="app.model.CuentaModel" table="Cuenta" schema="BancoVigo">
         <id name="cuCodCuenta" column="cuCodCuenta"/>
         <property name="cuCodSucursal" column="cuCodSucursal"/>
         <property name="cuFechaCreacion" column="cuFechaCreacion"/>

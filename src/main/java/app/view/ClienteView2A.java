@@ -1,6 +1,7 @@
-package org.example.view;
+package app.view;
 
-import org.example.controller.ClienteController;
+import app.controller.ClienteController;
+
 import javax.swing.*;
 
 /**

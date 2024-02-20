@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="org.example.model.ClienteModel" table="Cliente" schema="BancoVigo">
+    <class name="app.model.ClienteModel" table="Cliente" schema="BancoVigo">
         <id name="clDni" column="clDni"/>
         <property name="clNombre" column="clNombre"/>
         <property name="clApellido" column="clApellido"/>

@@ -1,4 +1,4 @@
-package org.example.model;
+package app.model;
 
 import jakarta.persistence.*;
 import java.util.HashSet;
@@ -23,10 +23,10 @@ public class ClienteModel {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CuentaModel> cuentas = new HashSet<>();
 
-    // Constructor, getters y setters
-
     public ClienteModel() {
     }
+
+    // Getters y setters
 
     public String getClDni() {
         return clDni;

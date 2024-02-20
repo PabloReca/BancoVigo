@@ -12,15 +12,15 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <mapping resource="ClienteModel.hbm.xml"/>
-        <mapping class="org.example.model.ClienteModel"/>
+        <mapping class="app.model.ClienteModel"/>
         <mapping resource="CuentaModel.hbm.xml"/>
-        <mapping class="org.example.model.CuentaModel"/>
+        <mapping class="app.model.CuentaModel"/>
         <mapping resource="CuentasClienteModel.hbm.xml"/>
-        <mapping class="org.example.model.CuentasClienteModel"/>
+        <mapping class="app.model.CuentasClienteModel"/>
         <mapping resource="SucursalesModel.hbm.xml"/>
-        <mapping class="org.example.model.SucursalesModel"/>
+        <mapping class="app.model.SucursalesModel"/>
         <mapping resource="TransaccionesModel.hbm.xml"/>
-        <mapping class="org.example.model.TransaccionesModel"/>
+        <mapping class="app.model.TransaccionesModel"/>
 
     </session-factory>
 </hibernate-configuration>

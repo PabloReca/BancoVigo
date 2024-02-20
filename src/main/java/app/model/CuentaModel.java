@@ -1,4 +1,4 @@
-package org.example.model;
+package app.model;
 
 import jakarta.persistence.*;
 import java.sql.Date;
@@ -24,10 +24,10 @@ public class CuentaModel {
     @JoinColumn(name = "clDni", nullable = false)
     private ClienteModel cliente;
 
-    // Constructor, getters y setters
-
     public CuentaModel() {
     }
+
+    // Getters y setters
 
     public int getCuCodCuenta() {
         return cuCodCuenta;

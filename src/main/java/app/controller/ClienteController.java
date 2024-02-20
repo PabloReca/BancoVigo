@@ -1,16 +1,19 @@
-package org.example.controller;
+package app.controller;
 
-import org.example.model.ClienteModel;
-import org.example.view.ClienteView2A;
-import org.example.view.ClienteView2B;
+import app.model.ClienteModel;
+import app.view.ClienteView2A;
+import app.view.ClienteView2B;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
 import java.util.List;
+
 
 /**
  * Controlador para gestionar clientes.
@@ -87,6 +90,13 @@ public class ClienteController {
      * Configura la acción del botón de borrar cliente.
      */
     private void setupDeleteButtonAction() {
+        // Elimina todos los ActionListeners previos para evitar duplicados
+        ActionListener[] listeners = viewA.getBorrarButton().getActionListeners();
+        for (ActionListener listener : listeners) {
+            viewA.getBorrarButton().removeActionListener(listener);
+        }
+
+        // Añade el ActionListener
         viewA.getBorrarButton().addActionListener(e -> {
             int selectedRow = viewA.getTable().getSelectedRow();
             if (selectedRow >= 0) {
@@ -97,6 +107,7 @@ public class ClienteController {
             }
         });
     }
+
 
     /**
      * Muestra el formulario para crear un nuevo cliente.
@@ -158,12 +169,13 @@ public class ClienteController {
         }
     }
 
+
     /**
      * Actualiza la información de un cliente en la base de datos.
      *
-     * @param row La fila de la tabla donde se encuentra el cliente.
+     * @param row    La fila de la tabla donde se encuentra el cliente.
      * @param column La columna de la tabla que se ha actualizado.
-     * @param data El nuevo valor para el cliente.
+     * @param data   El nuevo valor para el cliente.
      */
     private void updateClienteInDatabase(int row, int column, Object data) {
         Session session = sessionFactory.openSession();
@@ -199,8 +211,8 @@ public class ClienteController {
     /**
      * Crea un nuevo cliente y lo guarda en la base de datos.
      *
-     * @param dni El DNI del cliente.
-     * @param nombre El nombre del cliente.
+     * @param dni      El DNI del cliente.
+     * @param nombre   El nombre del cliente.
      * @param apellido El apellido del cliente.
      * @param telefono El teléfono del cliente.
      */

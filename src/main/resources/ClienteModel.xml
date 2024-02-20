@@ -2,7 +2,7 @@
 <entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
                  version="3.0">
 
-    <entity class="org.example.model.ClienteModel">
+    <entity class="app.model.ClienteModel">
         <table name="Cliente" schema="BancoVigo" catalog=""/>
         <attributes>
             <id name="clDni">

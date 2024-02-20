@@ -1,8 +1,8 @@
-package org.example;
+package app;
 
-import org.example.view.ClienteView2A;
-import org.example.view.ClienteView2B;
-import org.example.controller.ClienteController;
+import app.controller.ClienteController;
+import app.view.ClienteView2A;
+import app.view.ClienteView2B;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
