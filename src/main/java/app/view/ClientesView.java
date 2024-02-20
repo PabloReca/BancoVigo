@@ -8,7 +8,7 @@ import javax.swing.*;
  * Esta clase representa la interfaz gráfica para la gestión de clientes,
  * incluyendo funcionalidades para crear y borrar clientes.
  */
-public class ClienteView2A {
+public class ClientesView {
     // Componentes de la interfaz de usuario
     private final JFrame frame;
     private JTable table1;
@@ -22,7 +22,7 @@ public class ClienteView2A {
     /**
      * Constructor que inicializa la interfaz gráfica y configura los eventos de los botones.
      */
-    public ClienteView2A() {
+    public ClientesView() {
         // Inicialización de la ventana principal
         frame = new JFrame("Gestión de Clientes - Lista");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

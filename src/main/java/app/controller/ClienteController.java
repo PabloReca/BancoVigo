@@ -1,8 +1,8 @@
 package app.controller;
 
 import app.model.ClienteModel;
-import app.view.ClienteView2A;
-import app.view.ClienteView2B;
+import app.view.ClientesView;
+import app.view.CrearClienteView;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -21,10 +21,10 @@ import java.util.List;
  */
 public class ClienteController {
     private final SessionFactory sessionFactory;
-    private final ClienteView2A viewA;
-    private final ClienteView2B viewB;
+    private final ClientesView viewA;
+    private final CrearClienteView viewB;
 
-    public ClienteController(ClienteView2A viewA, ClienteView2B viewB, SessionFactory sessionFactory) {
+    public ClienteController(ClientesView viewA, CrearClienteView viewB, SessionFactory sessionFactory) {
         this.viewA = viewA;
         this.viewB = viewB;
         this.sessionFactory = sessionFactory;

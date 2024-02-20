@@ -6,7 +6,7 @@ import javax.swing.*;
  * Esta clase representa la interfaz gráfica para el formulario de gestión de clientes,
  * permitiendo introducir y enviar datos de nuevos clientes o editar los existentes.
  */
-public class ClienteView2B {
+public class CrearClienteView {
     // Componentes de la interfaz de usuario
     private JFrame frame;
     private JButton volverButton, crearButton;
@@ -16,7 +16,7 @@ public class ClienteView2B {
     /**
      * Constructor que inicializa la interfaz gráfica llamando al método prepareGUI.
      */
-    public ClienteView2B() {
+    public CrearClienteView() {
         prepareGUI();
     }
 
