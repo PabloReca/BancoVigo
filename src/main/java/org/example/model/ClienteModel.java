@@ -1,23 +1,32 @@
 package org.example.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "Cliente", schema = "BancoVigo", catalog = "")
+@Table(name = "Cliente", schema = "BancoVigo")
 public class ClienteModel {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "clDni")
     private String clDni;
-    @Basic
+
     @Column(name = "clNombre")
     private String clNombre;
-    @Basic
+
     @Column(name = "clApellido")
     private String clApellido;
-    @Basic
+
     @Column(name = "clTelefono")
     private Integer clTelefono;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CuentaModel> cuentas = new HashSet<>();
+
+    // Constructor, getters y setters
+
+    public ClienteModel() {
+    }
 
     public String getClDni() {
         return clDni;
@@ -49,5 +58,23 @@ public class ClienteModel {
 
     public void setClTelefono(Integer clTelefono) {
         this.clTelefono = clTelefono;
+    }
+
+    public Set<CuentaModel> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(Set<CuentaModel> cuentas) {
+        this.cuentas = cuentas;
+    }
+
+    public void addCuenta(CuentaModel cuenta) {
+        cuentas.add(cuenta);
+        cuenta.setCliente(this);
+    }
+
+    public void removeCuenta(CuentaModel cuenta) {
+        cuentas.remove(cuenta);
+        cuenta.setCliente(null);
     }
 }

@@ -1,25 +1,33 @@
 package org.example.model;
 
 import jakarta.persistence.*;
-
 import java.sql.Date;
 
 @Entity
-@Table(name = "Cuenta", schema = "BancoVigo", catalog = "")
+@Table(name = "Cuenta", schema = "BancoVigo")
 public class CuentaModel {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cuCodCuenta")
     private int cuCodCuenta;
-    @Basic
+
     @Column(name = "cuCodSucursal")
     private Integer cuCodSucursal;
-    @Basic
+
     @Column(name = "cuFechaCreacion")
     private Date cuFechaCreacion;
-    @Basic
+
     @Column(name = "CuSaldo")
     private Integer cuSaldo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "clDni", nullable = false)
+    private ClienteModel cliente;
+
+    // Constructor, getters y setters
+
+    public CuentaModel() {
+    }
 
     public int getCuCodCuenta() {
         return cuCodCuenta;
@@ -51,5 +59,13 @@ public class CuentaModel {
 
     public void setCuSaldo(Integer cuSaldo) {
         this.cuSaldo = cuSaldo;
+    }
+
+    public ClienteModel getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
     }
 }
