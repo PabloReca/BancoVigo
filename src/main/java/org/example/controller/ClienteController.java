@@ -12,7 +12,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-
+/**
+ * Controlador para gestionar clientes.
+ * Se encarga de la interacción entre la vista y el modelo, incluyendo acciones como cargar, crear, actualizar y borrar clientes.
+ */
 public class ClienteController {
     private final SessionFactory sessionFactory;
     private final ClienteView2A viewA;
@@ -25,6 +28,9 @@ public class ClienteController {
         initController();
     }
 
+    /**
+     * Inicializa el controlador, estableciendo la relación con las vistas y cargando los datos iniciales.
+     */
     private void initController() {
         System.out.println("Inicializando controlador...");
         viewA.setController(this);
@@ -34,9 +40,10 @@ public class ClienteController {
         setupCreateButtonActionInViewB();
     }
 
-
+    /**
+     * Carga y muestra la lista de clientes en la vista.
+     */
     private void loadClientes() {
-        System.out.println("Cargando clientes...");
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -46,11 +53,14 @@ public class ClienteController {
         DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"DNI", "Nombre", "Apellido", "Teléfono"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return true; // Aquí se puede ajustar si algunas columnas no deben ser editables
+                // Define si las celdas son editables
+                return true;
             }
         };
 
-        clientes.forEach(cliente -> tableModel.addRow(new Object[]{cliente.getClDni(), cliente.getClNombre(), cliente.getClApellido(), cliente.getClTelefono()}));
+        // Agrega los clientes al modelo de la tabla
+        clientes.forEach(cliente ->
+                tableModel.addRow(new Object[]{cliente.getClDni(), cliente.getClNombre(), cliente.getClApellido(), cliente.getClTelefono()}));
 
         viewA.getTable().setModel(tableModel);
 
@@ -58,6 +68,9 @@ public class ClienteController {
         session.close();
     }
 
+    /**
+     * Configura el listener para la tabla de clientes, permitiendo actualizar la información directamente desde la vista.
+     */
     private void setupTableListener() {
         viewA.getTable().getModel().addTableModelListener(e -> {
             if (e.getType() == TableModelEvent.UPDATE) {
@@ -70,6 +83,9 @@ public class ClienteController {
         });
     }
 
+    /**
+     * Configura la acción del botón de borrar cliente.
+     */
     private void setupDeleteButtonAction() {
         viewA.getBorrarButton().addActionListener(e -> {
             int selectedRow = viewA.getTable().getSelectedRow();
@@ -82,6 +98,9 @@ public class ClienteController {
         });
     }
 
+    /**
+     * Muestra el formulario para crear un nuevo cliente.
+     */
     public void showClienteForm() {
         if (viewB != null) {
             viewB.showGUI();
@@ -90,6 +109,9 @@ public class ClienteController {
         }
     }
 
+    /**
+     * Configura la acción del botón de crear cliente en la vista B.
+     */
     private void setupCreateButtonActionInViewB() {
         viewB.getCrearButton().addActionListener(e -> {
             String dni = viewB.getDniTextField().getText();
@@ -104,7 +126,11 @@ public class ClienteController {
         });
     }
 
-
+    /**
+     * Borra un cliente y sus cuentas asociadas de la base de datos.
+     *
+     * @param dni El DNI del cliente a borrar.
+     */
     public void deleteCliente(String dni) {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres eliminar este cliente y todas sus cuentas asociadas?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
@@ -113,7 +139,7 @@ public class ClienteController {
                 session.beginTransaction();
                 ClienteModel cliente = session.get(ClienteModel.class, dni);
                 if (cliente != null) {
-                    session.delete(cliente); // Hibernate borra las cuentas asociadas automáticamente
+                    session.delete(cliente);
                     session.getTransaction().commit();
                     JOptionPane.showMessageDialog(null, "Cliente y sus cuentas asociadas eliminados con éxito.");
                 } else {
@@ -126,15 +152,19 @@ public class ClienteController {
                 }
                 JOptionPane.showMessageDialog(null, "Error al eliminar el cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             } finally {
-                if (session != null) {
-                    session.close();
-                }
-                loadClientes(); // Recargar la lista de clientes para reflejar la eliminación
+                session.close();
+                loadClientes(); // Recarga la lista de clientes
             }
         }
     }
 
-
+    /**
+     * Actualiza la información de un cliente en la base de datos.
+     *
+     * @param row La fila de la tabla donde se encuentra el cliente.
+     * @param column La columna de la tabla que se ha actualizado.
+     * @param data El nuevo valor para el cliente.
+     */
     private void updateClienteInDatabase(int row, int column, Object data) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -142,6 +172,7 @@ public class ClienteController {
             String dni = viewA.getTable().getValueAt(row, 0).toString();
             ClienteModel cliente = session.get(ClienteModel.class, dni);
             if (cliente != null) {
+                // Actualiza el cliente según la columna modificada
                 switch (column) {
                     case 1:
                         cliente.setClNombre((String) data);
@@ -165,6 +196,14 @@ public class ClienteController {
         }
     }
 
+    /**
+     * Crea un nuevo cliente y lo guarda en la base de datos.
+     *
+     * @param dni El DNI del cliente.
+     * @param nombre El nombre del cliente.
+     * @param apellido El apellido del cliente.
+     * @param telefono El teléfono del cliente.
+     */
     private void createCliente(String dni, String nombre, String apellido, String telefono) {
         Session session = sessionFactory.openSession();
         try {
@@ -173,12 +212,12 @@ public class ClienteController {
             cliente.setClDni(dni);
             cliente.setClNombre(nombre);
             cliente.setClApellido(apellido);
-            cliente.setClTelefono(Integer.valueOf(telefono)); // Ajuste si es necesario según tu modelo
+            cliente.setClTelefono(Integer.valueOf(telefono));
             session.save(cliente);
             session.getTransaction().commit();
             JOptionPane.showMessageDialog(null, "Cliente creado con éxito.");
             viewB.getFrame().dispose();
-            loadClientes();
+            loadClientes(); // Recarga la lista de clientes
         } catch (Exception e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
