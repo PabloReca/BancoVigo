@@ -3,46 +3,47 @@ USE BancoVigo;
 -- Creación de la tabla Cliente
 CREATE TABLE Cliente
 (
-    dni       VARCHAR(255) PRIMARY KEY,
-    nombre    VARCHAR(255),
-    apellidos VARCHAR(255),
-    telefono  VARCHAR(255)
+    clDni VARCHAR(255) PRIMARY KEY,
+    clNombre VARCHAR(255),
+    clApellido VARCHAR(255),
+    clTelefono VARCHAR(255)
 );
 
 -- Creación de la tabla Sucursal primero, para asegurar que las FK puedan referenciarla
 CREATE TABLE Sucursal
 (
-    codSucursal INT PRIMARY KEY,
-    ciudad      VARCHAR(255),
-    activo      DOUBLE
+    suCodSucursal INT PRIMARY KEY,
+    suCiudad VARCHAR(255),
+    suActivo DOUBLE
 );
 
--- Ahora se puede crear Cuenta, ya que Sucursal ya existe
+-- Ahora se puede crear Cuenta, ya que Sucursal ya existe, ajustando a las correcciones
 CREATE TABLE Cuenta
 (
-    codCuenta     INT PRIMARY KEY,
-    codSucursal   INT,
-    fechaCreacion DATE,
-    saldo         INT,
-    FOREIGN KEY (codSucursal) REFERENCES Sucursal (codSucursal)
+    cuCodCuenta INT PRIMARY KEY,
+    cuCodSucursal INT,
+    cuFechaCreacion DATE,
+    cuSaldo DOUBLE,
+    FOREIGN KEY (cuCodSucursal) REFERENCES Sucursal(suCodSucursal)
 );
 
--- Creación de la tabla CuentaCliente, después de crear Cliente y Cuenta
-CREATE TABLE CuentaCliente
+-- Creación de la tabla CuentasCliente, después de crear Cliente y Cuenta
+CREATE TABLE CuentasCliente
 (
-    dni       VARCHAR(255),
-    codCuenta INT,
-    PRIMARY KEY (dni, codCuenta),
-    FOREIGN KEY (dni) REFERENCES Cliente (dni),
-    FOREIGN KEY (codCuenta) REFERENCES Cuenta (codCuenta)
+    ccDni VARCHAR(255),
+    ccCodCuenta INT,
+    PRIMARY KEY (ccDni, ccCodCuenta),
+    FOREIGN KEY (ccDni) REFERENCES Cliente(clDni),
+    FOREIGN KEY (ccCodCuenta) REFERENCES Cuenta(cuCodCuenta)
 );
 
--- Creación de la tabla Transaccion, después de crear Cuenta
-CREATE TABLE Transaccion
+-- Creación de la tabla Transacciones, después de crear Cuenta
+CREATE TABLE Transacciones
 (
-    codCuenta        INT,
-    fechaTransaccion DATE,
-    tipo             VARCHAR(255),
-    cantidad         INT,
-    FOREIGN KEY (codCuenta) REFERENCES Cuenta (codCuenta)
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    trCodCuenta INT,
+    trFechaTransaccion DATE,
+    trTipo VARCHAR(255),
+    trCantidad DOUBLE,
+    FOREIGN KEY (trCodCuenta) REFERENCES Cuenta(cuCodCuenta)
 );

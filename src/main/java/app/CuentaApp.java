@@ -6,13 +6,15 @@ import app.view.CrearCuentaView;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class CuentaApp {
+public class
+
+CuentaApp {
     public static void main(String[] args) {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        CuentaView viewA = new CuentaView();
-        CrearCuentaView viewB = new CrearCuentaView();
-        CuentaController controller = new CuentaController(viewA, viewB, sessionFactory);
-        viewA.setController(controller);
-        viewA.showGUI();
+        CuentaView viewC = new CuentaView();
+        CrearCuentaView viewD = new CrearCuentaView();
+        CuentaController controller = new CuentaController(viewC, viewD, sessionFactory);
+        viewC.setController(controller);
+        viewC.showGUI();
     }
 }

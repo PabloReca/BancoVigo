@@ -49,8 +49,8 @@ public class CuentaModel {
         return cuFechaCreacion;
     }
 
-    public void setCuFechaCreacion(String cuFechaCreacion) {
-        this.cuFechaCreacion = Date.valueOf(cuFechaCreacion);
+    public void setCuFechaCreacion(Date cuFechaCreacion) {
+        this.cuFechaCreacion = cuFechaCreacion;
     }
 
     public Integer getCuSaldo() {

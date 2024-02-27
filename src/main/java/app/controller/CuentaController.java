@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class CuentaController {
     private final SessionFactory sessionFactory;
-    private final CuentaView viewA;
-    private final CrearCuentaView viewB;
+    private final CuentaView viewC;
+    private final CrearCuentaView viewD;
 
-    public CuentaController(CuentaView viewA, CrearCuentaView viewB, SessionFactory sessionFactory) {
-        this.viewA = viewA;
-        this.viewB = viewB;
+    public CuentaController(CuentaView viewC, CrearCuentaView viewD, SessionFactory sessionFactory) {
+        this.viewC = viewC;
+        this.viewD = viewD;
         this.sessionFactory = sessionFactory;
         initController();
     }
@@ -37,7 +37,7 @@ public class CuentaController {
      */
     private void initController() {
         System.out.println("Inicializando controlador...");
-        viewA.setController(this);
+        viewC.setController(this);
         loadCuentas();
         setupTableListener();
         setupDeleteButtonAction();
@@ -51,10 +51,10 @@ public class CuentaController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Query<CuentaModel> query = session.createQuery("FROM ClienteModel", CuentaModel.class);
+        Query<CuentaModel> query = session.createQuery("FROM CuentaModel", CuentaModel.class);
         List<CuentaModel> clientes = query.list();
 
-        DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"DNI", "Nombre", "Apellido", "Teléfono"}, 0) {
+        DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"CodCuenta", "Cliente", "CodSucursal", "Saldo", "FechaCreacion"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 // Define si las celdas son editables
@@ -65,7 +65,7 @@ public class CuentaController {
         // Agrega los clientes al modelo de la tabla
         clientes.forEach(cuenta -> tableModel.addRow(new Object[]{cuenta.getCuCodCuenta(), cuenta.getCliente(), cuenta.getCuCodSucursal(), cuenta.getCuSaldo(), cuenta.getCuFechaCreacion()}));
 
-        viewA.getTable().setModel(tableModel);
+        viewC.getTable().setModel(tableModel);
 
         session.getTransaction().commit();
         session.close();
@@ -75,7 +75,7 @@ public class CuentaController {
      * Configura el listener para la tabla de clientes, permitiendo actualizar la información directamente desde la vista.
      */
     private void setupTableListener() {
-        viewA.getTable().getModel().addTableModelListener(e -> {
+        viewC.getTable().getModel().addTableModelListener(e -> {
             if (e.getType() == TableModelEvent.UPDATE) {
                 int row = e.getFirstRow();
                 int column = e.getColumn();
@@ -91,16 +91,16 @@ public class CuentaController {
      */
     private void setupDeleteButtonAction() {
         // Elimina todos los ActionListeners previos para evitar duplicados
-        ActionListener[] listeners = viewA.getBorrarButton().getActionListeners();
+        ActionListener[] listeners = viewC.getBorrarButton().getActionListeners();
         for (ActionListener listener : listeners) {
-            viewA.getBorrarButton().removeActionListener(listener);
+            viewC.getBorrarButton().removeActionListener(listener);
         }
 
         // Añade el ActionListener
-        viewA.getBorrarButton().addActionListener(e -> {
-            int selectedRow = viewA.getTable().getSelectedRow();
+        viewC.getBorrarButton().addActionListener(e -> {
+            int selectedRow = viewC.getTable().getSelectedRow();
             if (selectedRow >= 0) {
-                String dni = viewA.getTable().getValueAt(selectedRow, 0).toString();
+                String dni = viewC.getTable().getValueAt(selectedRow, 0).toString();
                 deleteCuenta(dni);
             } else {
                 JOptionPane.showMessageDialog(null, "Por favor, seleccione un cliente para borrar.");
@@ -113,8 +113,8 @@ public class CuentaController {
      * Muestra el formulario para crear un nuevo cliente.
      */
     public void showClienteForm() {
-        if (viewB != null) {
-            viewB.showGUI();
+        if (viewD != null) {
+            viewD.showGUI();
         } else {
             System.out.println("La vista B no está inicializada.");
         }
@@ -124,12 +124,12 @@ public class CuentaController {
      * Configura la acción del botón de crear cliente en la vista B.
      */
     private void setupCreateButtonActionInViewB() {
-        viewB.getCrearButton().addActionListener(e -> {
-            String cliente = viewB.getClienteTextField().getText();
-            String codCuentaStr = viewB.getCodCuentaTextField().getText();
-            String saldoStr = viewB.getSaldoTextField().getText();
-            String codSucursalStr = viewB.getCodSucursalTextField().getText();
-            String fechaCreacion = viewB.getFechaCreacionTextField().getText();
+        viewD.getCrearButton().addActionListener(e -> {
+            String cliente = viewD.getClienteTextField().getText();
+            String codCuentaStr = viewD.getCodCuentaTextField().getText();
+            String saldoStr = viewD.getSaldoTextField().getText();
+            String codSucursalStr = viewD.getCodSucursalTextField().getText();
+            String fechaCreacion = viewD.getFechaCreacionTextField().getText();
 
             if (cliente.isEmpty() || codCuentaStr.isEmpty() || saldoStr.isEmpty() || codSucursalStr.isEmpty() || fechaCreacion.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -188,7 +188,7 @@ public class CuentaController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         try {
-            String dni = viewA.getTable().getValueAt(row, 0).toString();
+            String dni = viewC.getTable().getValueAt(row, 0).toString();
             CuentaModel cliente = session.get(CuentaModel.class, dni);
             if (cliente != null) {
                 // Actualiza el cliente según la columna modificada
@@ -206,7 +206,7 @@ public class CuentaController {
                         cliente.setCuCodSucursal(Integer.valueOf((String) data));
                         break;
                     case 5:
-                        cliente.setCuFechaCreacion((data.toString()));
+                        cliente.setCuFechaCreacion(java.sql.Date.valueOf(data.toString()));
                         break;
                 }
                 session.saveOrUpdate(cliente);
@@ -224,11 +224,11 @@ public class CuentaController {
     /**
      * Crea un nuevo cliente y lo guarda en la base de datos.
      *
-     * @param cliente  El DNI del cliente.
+     * @param cliente     El DNI del cliente.
      * @param codCuenta   El nombre del cliente.
-     * @param saldo    El saldo del cliente.
-     * @param saldo    El saldo del cliente.
-     * @param  codSucursal teléfono del cliente.
+     * @param saldo       El saldo del cliente.
+     * @param saldo       El saldo del cliente.
+     * @param codSucursal teléfono del cliente.
      */
     private void createCliente(String cliente, int codCuenta, int saldo, int codSucursal, String fechaCreacion) {
         Session session = sessionFactory.openSession();
@@ -239,11 +239,11 @@ public class CuentaController {
             cuenta.setCuCodCuenta(codCuenta);
             cuenta.setCuSaldo(saldo);
             cuenta.setCuCodSucursal(codSucursal);
-            cuenta.setCuFechaCreacion(fechaCreacion);
+            cuenta.setCuFechaCreacion(java.sql.Date.valueOf(fechaCreacion));
             session.save(cuenta);
             session.getTransaction().commit();
             JOptionPane.showMessageDialog(null, "Cliente creado con éxito.");
-            viewB.getFrame().dispose();
+            viewD.getFrame().dispose();
             loadCuentas(); // Recarga la lista de clientes
         } catch (Exception e) {
             if (session.getTransaction() != null) {
