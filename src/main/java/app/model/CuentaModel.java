@@ -22,7 +22,7 @@ public class CuentaModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clDni", nullable = false)
-    private ClienteModel cliente;
+    private String cliente;
 
     public CuentaModel() {
     }
@@ -49,8 +49,8 @@ public class CuentaModel {
         return cuFechaCreacion;
     }
 
-    public void setCuFechaCreacion(Date cuFechaCreacion) {
-        this.cuFechaCreacion = cuFechaCreacion;
+    public void setCuFechaCreacion(String cuFechaCreacion) {
+        this.cuFechaCreacion = Date.valueOf(cuFechaCreacion);
     }
 
     public Integer getCuSaldo() {
@@ -61,11 +61,11 @@ public class CuentaModel {
         this.cuSaldo = cuSaldo;
     }
 
-    public ClienteModel getCliente() {
+    public String getCliente() {
         return cliente;
     }
 
-    public void setCliente(ClienteModel cliente) {
+    public void setCliente(String cliente) {
         this.cliente = cliente;
     }
 }

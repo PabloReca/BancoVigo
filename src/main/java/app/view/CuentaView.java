@@ -1,10 +1,10 @@
 package app.view;
 
-import app.controller.CuentasController;
+import app.controller.CuentaController;
 
 import javax.swing.*;
 
-public class CuentasView {
+public class CuentaView {
     JFrame frame;
     private JTable table1;
     private JButton borrarButton;
@@ -14,12 +14,12 @@ public class CuentasView {
 
 
     // Controlador para la lógica de negocio relacionada con los clientes
-    private CuentasController controller;
+    private CuentaController controller;
 
     /**
      * Constructor que inicializa la interfaz gráfica y configura los eventos de los botones.
      */
-    public CuentasView() {
+    public CuentaView() {
         // Inicialización de la ventana principal
         frame = new JFrame("Gestión de Clientes - Lista");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +31,7 @@ public class CuentasView {
             if (selectedRow >= 0) {
                 // Obtiene el DNI del cliente seleccionado y solicita su eliminación
                 String dni = table1.getModel().getValueAt(selectedRow, 0).toString();
-                controller.deleteCliente(dni);
+                controller.deleteCuenta(dni);
             } else {
                 // Muestra un mensaje si no se ha seleccionado ningún cliente
                 JOptionPane.showMessageDialog(null, "Por favor, seleccione un cliente para borrar.");
@@ -46,7 +46,7 @@ public class CuentasView {
      * Establece el controlador para esta vista.
      * @param controller El controlador que maneja las operaciones de negocio.
      */
-    public void setController(ClienteController controller) {
+    public void setController(CuentaController controller) {
         this.controller = controller;
     }
 

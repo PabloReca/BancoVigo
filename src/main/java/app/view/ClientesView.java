@@ -14,6 +14,7 @@ public class ClientesView {
     private JTable table1;
     private JButton borrarButton;
     private JButton crearButton;
+    private JButton cuentaButton;
     private JPanel mainPanel;
 
     // Controlador para la lógica de negocio relacionada con los clientes

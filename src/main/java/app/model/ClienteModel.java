@@ -70,7 +70,7 @@ public class ClienteModel {
 
     public void addCuenta(CuentaModel cuenta) {
         cuentas.add(cuenta);
-        cuenta.setCliente(this);
+        cuenta.setCliente(String.valueOf(this));
     }
 
     public void removeCuenta(CuentaModel cuenta) {
